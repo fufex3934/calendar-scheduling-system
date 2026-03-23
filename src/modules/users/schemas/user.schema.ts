@@ -14,7 +14,7 @@ export class User {
   @Prop({ required: true })
   password: string;
 
-  @Prop()
+  @Prop({ default: 'user' })
   role?: string; // For future use (admin, user, etc.)
 
   @Prop({ type: [{ type: Types.ObjectId, ref: 'Appointment' }] })

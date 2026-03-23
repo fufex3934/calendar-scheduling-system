@@ -22,12 +22,7 @@ export class BusinessLineController {
     return this.businessLineService.findAll();
   }
 
-  @Get(':slug')
-  async findBySlug(@Param('slug') slug: string) {
-    return this.businessLineService.findBySlug(slug);
-  }
-
-  // Public endpoints (no auth)
+  // ✅ Public endpoints FIRST (more specific)
   @Get('public')
   async getAllPublic() {
     return this.businessLineService.getAllPublicBusinessLines();
@@ -38,7 +33,13 @@ export class BusinessLineController {
     return this.businessLineService.getPublicBusinessLine(slug);
   }
 
-  // Admin endpoints (require JWT + admin role)
+  // ✅ Parameterized route LAST (less specific)
+  @Get(':slug')
+  async findBySlug(@Param('slug') slug: string) {
+    return this.businessLineService.findBySlug(slug);
+  }
+
+  // Admin endpoints
   @Post()
   @UseGuards(JwtAuthGuard, AdminGuard)
   async create(@Body() createBusinessLineDto: CreateBusinessLineDto) {

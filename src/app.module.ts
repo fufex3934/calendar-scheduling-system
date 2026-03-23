@@ -8,6 +8,7 @@ import { BookingModule } from './modules/booking/booking.module';
 import { BusinessLineModule } from './modules/business-line/business-line.module';
 import { AppointmentModule } from './modules/appointment/appointment.module';
 import { UserModule } from './modules/users/users.module';
+import { AuthModule } from './modules/auth/auth.module';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { UserModule } from './modules/users/users.module';
     BusinessLineModule,
     AppointmentModule,
     UserModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
