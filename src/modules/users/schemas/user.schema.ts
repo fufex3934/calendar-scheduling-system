@@ -5,11 +5,17 @@ export type UserDocument = HydratedDocument<User>;
 
 @Schema({ timestamps: true })
 export class User {
+  [x: string]: any;
   @Prop({ required: true })
   name: string;
 
   @Prop({ required: true, unique: true })
   email: string;
+  @Prop({ required: true })
+  password: string;
+
+  @Prop()
+  role?: string; // For future use (admin, user, etc.)
 
   @Prop({ type: [{ type: Types.ObjectId, ref: 'Appointment' }] })
   appointments: Types.ObjectId[];
