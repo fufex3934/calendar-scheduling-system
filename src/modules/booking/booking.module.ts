@@ -6,9 +6,16 @@ import { AppointmentModule } from '../appointment/appointment.module';
 import { BusinessLineModule } from '../business-line/business-line.module';
 import { UserModule } from '../users/users.module';
 import { MeetingModule } from '../../integrations/meeting.module';
+import { EmailModule } from '../email/email.module';
 
 @Module({
-  imports: [AppointmentModule, BusinessLineModule, UserModule, MeetingModule],
+  imports: [
+    AppointmentModule,
+    BusinessLineModule,
+    UserModule,
+    MeetingModule,
+    EmailModule,
+  ],
   controllers: [BookingController],
   providers: [BookingService],
 })

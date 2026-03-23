@@ -12,6 +12,7 @@ import { UserService } from '../users/users.service';
 import { MeetingService } from 'src/integrations/meeting.service';
 import { CreateBookingDto } from './dto/create-booking.dto';
 import { MeetingType } from '../../common/enums/meeting-type.enum';
+import { EmailService } from '../email/email.service';
 
 @Injectable()
 export class BookingService {
@@ -20,6 +21,7 @@ export class BookingService {
     private businessLineRepository: BusinessLineRepository,
     private userService: UserService,
     private meetingService: MeetingService,
+    private emailService: EmailService,
   ) {}
 
   async createBooking(slug: string, dto: CreateBookingDto) {
@@ -79,6 +81,26 @@ export class BookingService {
       ...dto,
       user: user._id.toString(),
       businessLine: businessLine._id.toString(),
+      meetingLink,
+    });
+
+    // Send confirmation email
+    await this.emailService.sendBookingConfirmation(dto.clientEmail, {
+      clientName: dto.clientName,
+      businessLine: businessLine.name,
+      startTime: new Date(dto.startTime),
+      endTime: new Date(dto.endTime),
+      meetingType: dto.meetingType,
+      meetingLink,
+    });
+
+    // Send admin notification
+    await this.emailService.sendBookingConfirmation('admin@company.com', {
+      clientName: dto.clientName,
+      businessLine: businessLine.name,
+      startTime: new Date(dto.startTime),
+      endTime: new Date(dto.endTime),
+      meetingType: dto.meetingType,
       meetingLink,
     });
 
